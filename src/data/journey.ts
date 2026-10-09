@@ -85,6 +85,14 @@ export const journey: JourneyEntry[] = [
     links: [{ label: 'tryhackme.com/p/dasvighnesh', href: 'https://tryhackme.com/p/dasvighnesh' }],
   },
   {
+    id: 'helo',
+    category: 'Security',
+    title: 'End-to-end encrypted messaging',
+    body: 'Helo: X3DH session establishment, the Double Ratchet and AES-256-GCM, written as a normative Python reference first and a Flutter client second. 98 protocol tests, 22 relay tests and a claims register that maps every security property to the test that demonstrates it — and lists what is not claimed.',
+    accent: 'lime',
+    links: [{ label: 'Helo_E2E', href: 'https://github.com/vignettedias/Helo_E2E' }],
+  },
+  {
     id: 'crypto',
     category: 'Security',
     title: 'Cryptographic engineering',
@@ -107,9 +115,12 @@ export const journey: JourneyEntry[] = [
     id: 'reverse',
     category: 'Engineering',
     title: 'Reverse engineering and preservation',
-    body: 'Root-caused a rendering fault in a delisted Unity Android title down to a camera depth tie, after building and disproving five earlier hypotheses. Verified on hardware.',
+    body: 'Root-caused a rendering fault in a delisted Unity Android title down to a camera depth tie, after building and disproving five earlier hypotheses, and verified it on hardware. Then brought a 2012 game that crashed on launch back to Android 14–16 with eight bytecode patches and a 22-step acceptance test — gameplay untouched.',
     accent: 'magenta',
-    links: [{ label: 'BeastQuest-Patch', href: 'https://github.com/vignettedias/BeastQuest-Patch' }],
+    links: [
+      { label: 'BeastQuest-Patch', href: 'https://github.com/vignettedias/BeastQuest-Patch' },
+      { label: 'ILoveFortConquer', href: 'https://github.com/vignettedias/ILoveFortConquer' },
+    ],
   },
   {
     id: 'robotics',

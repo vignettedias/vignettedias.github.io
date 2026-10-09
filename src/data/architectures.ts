@@ -317,7 +317,7 @@ export const heroNodes: HeroNode[] = [
     x: 16,
     y: 50,
     accent: 'cyan',
-    items: ['Secure architecture', 'Cryptographic engineering', 'Identity & OIDC', 'Audit & integrity'],
+    items: ['Secure architecture', 'E2E messaging protocols', 'Cryptographic engineering', 'Identity & OIDC'],
   },
   {
     id: 'software',
@@ -325,7 +325,7 @@ export const heroNodes: HeroNode[] = [
     x: 84,
     y: 50,
     accent: 'lime',
-    items: ['Backend & APIs', 'Docker & CI/CD', 'Android', 'Full stack'],
+    items: ['Backend & APIs', 'Docker & CI/CD', 'Android & Flutter', 'Full stack'],
   },
   {
     id: 'systems',
@@ -333,6 +333,15 @@ export const heroNodes: HeroNode[] = [
     x: 50,
     y: 86,
     accent: 'violet',
-    items: ['ROS 2 & robotics', 'Verilog & digital logic', 'C++ services', 'Reverse engineering'],
+    items: ['ROS 2 & robotics', 'Verilog & digital logic', 'C++ services', 'Reverse engineering & preservation'],
   },
+];
+
+/** Helo's protocol layers, top to bottom — as listed in the repository README. */
+export const heloStack = [
+  { name: 'Identity', detail: 'Ed25519 signatures + X25519 DH' },
+  { name: 'X3DH', detail: 'Session establishment · PQXDH seam' },
+  { name: 'Double Ratchet', detail: 'Fresh key for every message' },
+  { name: 'AES-256-GCM', detail: 'AEAD with an HKDF-derived nonce' },
+  { name: 'Untrusted relay', detail: 'Moves ciphertext, holds no keys' },
 ];

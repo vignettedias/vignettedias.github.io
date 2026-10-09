@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Menu, X, Github } from 'lucide-react';
+import { Menu, X, Github, Search } from 'lucide-react';
 import { navSections, profile } from '../data/profile';
 import { useActiveSection, useScrollProgress } from '../hooks/useSite';
 import { useUiMode } from '../hooks/uiMode';
 
 const sectionIds = navSections.map((s) => s.id);
+const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/i.test(navigator.platform || navigator.userAgent);
 
 function ModeToggles({ compact = false }: { compact?: boolean }) {
   const { recruiter, toggleRecruiter, deepDive, toggleDeepDive } = useUiMode();
@@ -43,7 +44,7 @@ function ModeToggles({ compact = false }: { compact?: boolean }) {
   );
 }
 
-export default function Navbar() {
+export default function Navbar({ onOpenPalette }: { onOpenPalette: () => void }) {
   const active = useActiveSection(sectionIds);
   const progress = useScrollProgress();
   const [open, setOpen] = useState(false);
@@ -133,6 +134,16 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={onOpenPalette}
+            aria-label="Open command palette"
+            aria-keyshortcuts={isMac ? 'Meta+K' : 'Control+K'}
+            className="group flex items-center gap-2 border border-line-2 px-2.5 py-1.5 text-muted transition-colors hover:border-cyan/60 hover:text-cyan"
+          >
+            <Search size={13} strokeWidth={1.8} aria-hidden="true" />
+            <kbd className="hidden font-mono text-[10px] tracking-wider sm:inline">{isMac ? '⌘K' : 'Ctrl K'}</kbd>
+          </button>
           <ModeToggles />
           {profile.links.github.href && (
             <a

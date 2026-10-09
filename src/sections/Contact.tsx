@@ -26,7 +26,7 @@ export default function Contact() {
         <h2 className="display mt-6 text-[clamp(2.2rem,8vw,4.5rem)] text-fg">
           Let's build something
           <br />
-          <span className="text-cyan">secure.</span>
+          <span className="glitch-hover inline-block text-cyan">secure.</span>
         </h2>
 
         <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-fg-dim md:text-base">

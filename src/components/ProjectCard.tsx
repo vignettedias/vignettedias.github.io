@@ -2,6 +2,7 @@ import { ArrowUpRight, Github, ShieldCheck } from 'lucide-react';
 import type { Project } from '../data/projects';
 import { accentClass } from '../lib/accent';
 import { useUiMode } from '../hooks/uiMode';
+import { isRecent } from '../lib/time';
 
 interface ProjectCardProps {
   project: Project;
@@ -25,6 +26,9 @@ export default function ProjectCard({ project, onOpen }: ProjectCardProps) {
             <ShieldCheck size={11} strokeWidth={2} aria-hidden="true" />
             Patented
           </span>
+        )}
+        {!project.patented && isRecent(project.released, 60) && (
+          <span className="data-label border border-accent bg-accent/10 px-2 py-1 text-accent">New</span>
         )}
       </div>
 

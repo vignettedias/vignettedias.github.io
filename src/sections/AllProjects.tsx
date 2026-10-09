@@ -3,6 +3,7 @@ import Section from '../components/Section';
 import SectionHeading from '../components/SectionHeading';
 import Reveal from '../components/Reveal';
 import ProjectCard from '../components/ProjectCard';
+import GithubTelemetry from '../components/GithubTelemetry';
 import { secondaryProjects } from '../data/projects';
 
 interface AllProjectsProps {
@@ -28,7 +29,7 @@ export default function AllProjects({ onOpen }: AllProjectsProps) {
         index="06"
         eyebrow="Project explorer"
         title="The rest of the work"
-        lede="Secure backends, cryptographic engines, robots, a 4-bit datapath, and one delisted Android game that turned out to have a camera ordering bug."
+        lede="Secure backends, cryptographic engines, robots, a 4-bit datapath, and two delisted Android games brought back to life — one of which turned out to have a camera ordering bug."
       />
 
       <Reveal className="mb-6">
@@ -58,6 +59,10 @@ export default function AllProjects({ onOpen }: AllProjectsProps) {
           </Reveal>
         ))}
       </div>
+
+      <Reveal className="mt-10">
+        <GithubTelemetry />
+      </Reveal>
     </Section>
   );
 }

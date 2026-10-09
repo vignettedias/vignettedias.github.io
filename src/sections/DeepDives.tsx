@@ -73,7 +73,7 @@ export function MmaifaDeepDive() {
       />
 
       <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-8">
-        <Reveal from="left">
+        <Reveal from="left" className="min-w-0">
           <div className="space-y-5">
             <div>
               <h3 className="data-label text-cyan">The problem</h3>
@@ -87,7 +87,7 @@ export function MmaifaDeepDive() {
           </div>
         </Reveal>
 
-        <Reveal from="right" delay={0.1}>
+        <Reveal from="right" delay={0.1} className="min-w-0">
           <ArchitectureDiagram
             diagram={mmaifaDiagram}
             caption="MMAIFA — forensic pipeline"
@@ -112,7 +112,7 @@ export function DynastyDeepDive() {
       />
 
       <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:gap-8">
-        <Reveal from="left">
+        <Reveal from="left" className="min-w-0">
           <div className="space-y-5">
             <div>
               <h3 className="data-label text-violet">The problem</h3>
@@ -126,7 +126,7 @@ export function DynastyDeepDive() {
           </div>
         </Reveal>
 
-        <Reveal from="right" delay={0.1}>
+        <Reveal from="right" delay={0.1} className="min-w-0">
           <ArchitectureDiagram
             diagram={dynastyDiagram}
             caption="Dynasty — mint to settlement"

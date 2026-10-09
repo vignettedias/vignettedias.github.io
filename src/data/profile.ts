@@ -11,6 +11,16 @@ export interface ContactLink {
   handle: string | null;
 }
 
+export interface Stat {
+  id: string;
+  label: string;
+  value: number;
+  /** Zero-pad to this many digits ("02"). */
+  pad?: number;
+  decimals?: number;
+  note: string;
+}
+
 export const profile = {
   name: 'Vighnesh Das',
   role: 'B.Tech Cyber Security · VIT Vellore',
@@ -22,16 +32,17 @@ export const profile = {
 
   bio: [
     'I am a B.Tech Cyber Security student at VIT Vellore, working across offensive security, applied AI, and backend systems. Most of what I build starts from the same question: what happens to this system when something goes wrong — a malformed request, a compromised database, an adversarial image, an unknown generator?',
-    'That question is why my projects converge on the same concerns. MMAIFA fuses independent forensic evidence streams and refuses to force certainty when they disagree; it is the subject of a published patent. SourceForm encrypts submission metadata so a database compromise still leaks very little. The Fernet REST Service was written against Node’s native crypto primitives rather than a library, so the tamper detection and TTL validation are mine to reason about.',
-    'On the offensive side I work through CTF rooms on TryHackMe and HackTheBox, run OWASP Top 10 analysis with Nmap, Wireshark and Metasploit, and have deployed SNORT with custom rule sets to catch port scans and brute-force attempts. I work down the stack as well as across it — Kotlin on Android, TypeScript and Express behind NGINX, Python for model pipelines, ROS 2 for robotics, and Verilog when the problem is a datapath rather than a service.',
+    'That question is why my projects converge on the same concerns. MMAIFA fuses independent forensic evidence streams and refuses to force certainty when they disagree; it is the subject of a published patent. SourceForm encrypts submission metadata so a database compromise still leaks very little. The Fernet REST Service was written against Node’s native crypto primitives rather than a library, so the tamper detection and TTL validation are mine to reason about. Helo runs X3DH and the Double Ratchet over a relay it treats as hostile, and maps every security claim it makes to a named, passing test.',
+    'On the offensive side I work through CTF rooms on TryHackMe and HackTheBox, run OWASP Top 10 analysis with Nmap, Wireshark and Metasploit, and have deployed SNORT with custom rule sets to catch port scans and brute-force attempts. I work down the stack as well as across it — Kotlin on Android, Java when a delisted game needs bringing back, Dart and Flutter for a messaging client, TypeScript and Express behind NGINX, Python for model pipelines, ROS 2 for robotics, and Verilog when the problem is a datapath rather than a service.',
   ],
 
   stats: [
-    // Every figure here is from the résumé or countable on GitHub.
-    { label: 'Published patents', value: '02', note: 'MMAIFA · Dynasty' },
-    { label: 'CGPA', value: '8.91', note: 'B.Tech Cyber Security' },
-    { label: 'Repositories', value: '10', note: 'github.com/vignettedias' },
-  ],
+    // Every figure here is from the résumé or countable on GitHub. The repository
+    // count is replaced at runtime by the live figure from the GitHub API.
+    { id: 'patents', label: 'Published patents', value: 2, pad: 2, note: 'MMAIFA · Dynasty' },
+    { id: 'cgpa', label: 'CGPA', value: 8.91, decimals: 2, note: 'B.Tech Cyber Security' },
+    { id: 'repos', label: 'Repositories', value: 13, note: 'github.com/vignettedias' },
+  ] as Stat[],
 
   links: {
     github: { label: 'GitHub', href: 'https://github.com/vignettedias', handle: 'vignettedias' },

@@ -104,6 +104,23 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             <div className="space-y-5 px-5 py-5 sm:px-7 sm:py-6">
               <p className="text-[15px] leading-relaxed text-fg">{project.description}</p>
 
+              {project.metrics && (
+                <dl className="grid grid-cols-2 gap-px border border-line bg-line sm:grid-cols-4">
+                  {project.metrics.map((m) => (
+                    <div key={m.label} className="flex flex-col-reverse bg-panel px-3 py-3">
+                      <dt className="mt-1 font-mono text-[10px] tracking-wide text-muted">{m.label}</dt>
+                      <dd className="display text-xl text-fg">{m.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
+
+              {project.status && (
+                <p className="font-mono text-[10px] tracking-wide text-muted">
+                  <span className="text-accent">STATUS</span> · {project.status}
+                </p>
+              )}
+
               <Block title="The problem">
                 <p>{project.problem}</p>
               </Block>

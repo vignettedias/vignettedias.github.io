@@ -22,6 +22,10 @@ export interface Project {
   patented?: boolean;
   /** Repo's stated status, when it states one. */
   status?: string;
+  /** Repository creation date (ISO). Drives the self-expiring "New" badge. */
+  released?: string;
+  /** Headline figures, each stated in the repository README. */
+  metrics?: { value: string; label: string }[];
   problem: string;
   approach: string;
   architecture: string[];
@@ -98,6 +102,49 @@ export const projects: Project[] = [
     ],
     contribution:
       'Front-end application architecture, the minting and wallet modules, and the purchase flow that connects them.',
+  },
+  {
+    id: 'helo',
+    title: 'Helo',
+    subtitle: 'End-to-end encrypted messaging · X3DH + Double Ratchet',
+    category: 'Cryptography · Secure Messaging',
+    accent: 'lime',
+    description:
+      'An end-to-end encrypted messenger built cryptography-first: X3DH and the Double Ratchet over a relay it treats as hostile, with every security claim mapped to a named, passing test.',
+    technologies: ['Python', 'Dart / Flutter', 'Node.js', 'X25519', 'Ed25519', 'HKDF-SHA-256', 'AES-256-GCM', 'Hypothesis', 'SQLite', 'Docker', 'Caddy', 'GitHub Actions'],
+    githubUrl: 'https://github.com/vignettedias/Helo_E2E',
+    featured: true,
+    status: 'All 15 phases complete · Dart client not yet executed',
+    released: '2026-08-18',
+    metrics: [
+      { value: '98', label: 'protocol tests' },
+      { value: '22', label: 'relay tests' },
+      { value: '25', label: 'cross-stack checks' },
+      { value: '57 B', label: 'ciphertext overhead' },
+    ],
+    problem:
+      'A polished chat UI over an unverified protocol is how secure messengers fail. And the server in the middle usually sees far more than “zero knowledge” marketing admits.',
+    approach:
+      'Cryptography first, chat UI last. A normative Python reference implements identity keys, prekeys, X3DH session establishment, the Double Ratchet and AES-256-GCM message encryption over audited library primitives — none are hand-rolled. Deterministic test vectors pin every derived byte, so the Flutter port can be checked against the reference rather than trusted. The backend is described as exactly what it is: an untrusted ciphertext relay that never holds plaintext or session keys.',
+    architecture: [
+      'Identity — an Ed25519 signing key and an X25519 DH key, bound together by signature, fingerprint and AEAD associated data.',
+      'X3DH session establishment, behind a seam designed so a hybrid PQXDH (ML-KEM-768) can replace it without touching the ratchet.',
+      'Double Ratchet → per-message keys → AES-256-GCM with an HKDF-derived nonce.',
+      'Untrusted relay — public prekey bundles, a ciphertext queue and delivery state, with zero npm dependencies.',
+      'Flutter client — Dart port of the reference, Keystore/Keychain-wrapped storage, and a relay client that only ever moves ciphertext.',
+    ],
+    highlights: [
+      'Every security property mapped to a named passing test in SECURITY_CLAIMS.md; intended-but-undemonstrated properties are listed separately as not claimed.',
+      '98 protocol tests across unit, adversarial, Hypothesis property-based and integration suites, plus 22 relay tests and 25 cross-stack end-to-end checks.',
+      'AEAD nonce derived from the message key instead of sent at random — a runtime RNG assumption turned into a structural guarantee, saving 12 bytes per message.',
+      'The end-to-end test opens the relay’s SQLite file and scans the raw bytes for plaintext and key material.',
+      'Both forward-secrecy exceptions (in-flight messages, stored skipped keys) are asserted by dedicated tests rather than footnoted.',
+      'Constant 57-byte ciphertext expansion — and the plaintext-length leak that implies — recorded as a limitation, not glossed over.',
+      'Hardened deployment: read-only, non-root container with every capability dropped, relay off the public network, TLS terminated by Caddy.',
+      'Stated up front: not post-quantum secure, not independently audited, and not for protecting real communications yet.',
+    ],
+    contribution:
+      'Protocol design and the normative Python reference, the zero-dependency relay, the Flutter client, the threat model and claims register, and the CI and deployment pipeline.',
   },
   {
     id: 'securedocs',
@@ -214,6 +261,41 @@ export const projects: Project[] = [
     contribution: 'Root-cause analysis, the patch tooling, and the written record of what was tried and disproved.',
   },
   {
+    id: 'fortconquer',
+    title: 'Fort Conquer Revival',
+    subtitle: 'DroidHen’s Fort Conquer 1.2.4 on modern Android',
+    category: 'Reverse Engineering · Android',
+    accent: 'magenta',
+    description:
+      'A 2012 Android game that crashes seconds after launch on Android 14+, patched at the bytecode level to run on Android 14–16 without changing a single gameplay rule.',
+    technologies: ['Java', 'Android bytecode patching', 'Gradle (Kotlin DSL)', 'redroid', 'QEMU', 'adb'],
+    githubUrl: 'https://github.com/vignettedias/ILoveFortConquer',
+    status: 'Validated on Android 14, 15 and 16',
+    released: '2026-10-04',
+    problem:
+      'Fort Conquer is delisted, so no update is ever coming — and the original APK targets APIs that modern Android has removed outright. On Android 14, 15 and 16 it crashes seconds after launch.',
+    approach:
+      'Run the untouched APK on the same Android images first and record every failure, so each patch answers a documented fault. Then fix with the smallest possible change: eight patches on top of the original bytecode plus a compatibility layer of four Java classes (~230 lines). Gameplay, balance, graphics, sound, engine and save format are left exactly as they were.',
+    architecture: [
+      'Baseline — the original APK run on Android 14/15/16 AOSP images to record the failures before anything is changed.',
+      'patches/ — eight targeted patches applied to the original bytecode.',
+      'compat/ — four Java classes bridging platform APIs that changed or disappeared.',
+      'Gradle pipeline (buildSrc + build.gradle.kts) producing a reproducible signed APK; verify_apk.sh checks manifest, alignment and signatures.',
+      'Test harness — a 22-step acceptance test with screenshot evidence for every step.',
+    ],
+    highlights: [
+      'Launch crash root-caused to the Apache HTTP client, which Android 9+ removes from apps targeting API 28 and above.',
+      'targetSdk raised from 30 to 36, with predictive back bridged into the game’s own handler exactly once per press and display cutouts handled under Android 15+ edge-to-edge.',
+      'Crashing 2018 AdMob SDK removed; old server traffic moved to HTTPS with cleartext left disabled.',
+      'Two original bugs fixed — a coin-store BUY that did nothing without billing, and a “Learn more” crash on devices with no browser.',
+      'Fewer permissions than the original: no storage, no phone state.',
+      'Tested on Android 14, 15 and 16 in a QEMU VM with a 22-step acceptance test covering battles, market, lifecycle, back navigation and display cutouts.',
+      'Reproducible builds for a given signing key, with a published SHA-256 for every APK.',
+    ],
+    contribution:
+      'Baseline failure analysis, the patch set and compatibility layer, the reproducible build and verification pipeline, and the acceptance-test record.',
+  },
+  {
     id: 'diffbot',
     title: 'Simple DiffBot Gazebo',
     category: 'Robotics · Simulation',
@@ -316,5 +398,7 @@ export const projects: Project[] = [
 ];
 
 export const featuredProjects = projects.filter((p) => p.featured);
+/** The paired flagship cards. Helo is featured too, but gets its own wide card. */
+export const patentedFeatured = featuredProjects.filter((p) => p.patented);
 export const secondaryProjects = projects.filter((p) => !p.featured);
 export const projectById = (id: string) => projects.find((p) => p.id === id);

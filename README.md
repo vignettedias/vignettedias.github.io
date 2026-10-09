@@ -46,7 +46,18 @@ All content lives in `src/data/` — no copy is hard-coded into components.
 | `src/data/patents.ts` | Patent entries, application numbers, publication stage |
 | `src/data/skills.ts` | Skill groups and the repository each skill is evidenced by |
 | `src/data/journey.ts` | Engineering principles and the timeline |
-| `src/data/architectures.ts` | Node/edge definitions for the interactive diagrams |
+| `src/data/architectures.ts` | Node/edge definitions for the interactive diagrams, and Helo's protocol stack |
+| `src/data/github.ts` | Dated snapshot of the public repositories — the fallback for the live GitHub data |
+
+**Live GitHub data.** The repository count in the hero, the "last push" chip and the telemetry panel
+under the project explorer read `api.github.com/users/vignettedias/repos` on page load (cached for
+15 minutes per tab). Until it answers — or if it is rate-limited — the snapshot in
+`src/data/github.ts` is shown and labelled with its date. Refresh the snapshot when you add repositories.
+
+**"New" badges** come from each project's `released` date and disappear on their own 60 days later.
+
+**Link preview.** `public/og.png` is rendered from `scripts/og-card.html`; the regeneration command is in
+that file's header comment.
 
 **Contact links.** Any link in `profile.links` set to `href: null` is hidden site-wide — nothing renders
 as a dead link. Add the URL and the button appears automatically.
@@ -65,6 +76,12 @@ degrades to a disabled "Résumé not uploaded" state rather than breaking.
   skills → background), expands the skill matrix so nothing is behind a click, and hides section
   ordinals (which would no longer be accurate after reordering).
 - **Deep dive** — expands the engineering-internals panels on the MMAIFA and Dynasty deep dives.
+- **Command palette** — <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>K</kbd> (or the search button in the nav) to jump to a
+  section, open any project, copy the email address, download the résumé or toggle either mode.
+- **vd-console** — the terminal in About. `help` lists commands; `neofetch`, `repos` and Tab completion included.
+
+Ambient effects — the node-network background, the decoding name, count-up stats, the card spotlight and
+the stack ticker — are all switched off by Recruiter mode and by `prefers-reduced-motion`.
 
 ---
 
@@ -143,7 +160,7 @@ First deployment can take a couple of minutes to propagate.
 ## Content policy
 
 Nothing on this site is invented. Project descriptions are derived from the repositories at
-github.com/vignettedias; personal and academic details come from the résumé. Skills name the
+github.com/vignettedias, and repository counts come from the GitHub API; personal and academic details come from the résumé. Skills name the
 repository that demonstrates them rather than showing self-assigned percentages. Patent entries carry
 only the application number and the stage supplied by the inventor — no filing dates, jurisdictions,
 grant status, or claim of legal verification.

@@ -11,6 +11,12 @@ export default function Footer() {
           <p className="mt-1.5 font-mono text-[11px] tracking-wide text-muted">
             Computer Science × Cyber Security × AI
           </p>
+          <p className="mt-3 font-mono text-[10px] tracking-wide text-muted/70">
+            React · Vite · Tailwind — shipped by GitHub Actions. Press{' '}
+            <kbd className="border border-line-2 px-1 text-fg-dim">Ctrl</kbd>/<kbd className="border border-line-2 px-1 text-fg-dim">⌘</kbd>
+            {' + '}
+            <kbd className="border border-line-2 px-1 text-fg-dim">K</kbd> to navigate.
+          </p>
         </div>
 
         <div className="flex flex-col gap-4 sm:items-end">

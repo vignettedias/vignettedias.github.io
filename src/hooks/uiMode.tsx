@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
+import { useReducedMotion } from 'framer-motion';
 
 interface UiModeValue {
   /** Recruiter mode: quieter motion, denser information, CV-shaped reading order. */
@@ -41,4 +42,10 @@ export function useUiMode(): UiModeValue {
   const ctx = useContext(UiModeContext);
   if (!ctx) throw new Error('useUiMode must be used inside UiModeProvider');
   return ctx;
+}
+
+/** True when ambient motion should stop: the OS asks for reduced motion, or Recruiter mode is on. */
+export function useStill(): boolean {
+  const prefersReduced = useReducedMotion();
+  return Boolean(prefersReduced) || useUiMode().recruiter;
 }
